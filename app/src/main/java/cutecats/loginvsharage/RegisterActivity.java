@@ -18,6 +18,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static cutecats.loginvsharage.R.id.bRegister;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -83,7 +86,18 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 };
 
-                RegisterRequest registerRequest = new RegisterRequest(email, password, confirmpassword, secondname, firstname, surname, responseListener);
+                Map<String, String> params;
+                params = new HashMap<>();
+                params.put("method", "user.registration");
+
+                params.put("email",             email);
+                params.put("password",          password);
+                params.put("passwordConfirm",   password); /* TODO: ЗАМЕНИТЬ НА CONFIRM PASSWORD */
+                params.put("secondName",        secondname);
+                params.put("firstName",         firstname);
+                params.put("surName",           surname);
+
+                RegisterRequest registerRequest = new RegisterRequest(params, responseListener);
                 RequestQueue    queue           = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
             }
